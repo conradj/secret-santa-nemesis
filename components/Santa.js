@@ -13,9 +13,9 @@ const Santa = ({
     </div>
     <div>
       <label>
-        Santa's Email:
+        Santa's Email:{" "}
         <input
-          type="text"
+          type="email"
           name="santaEmail"
           onChange={handleEmailInputChange}
         />
