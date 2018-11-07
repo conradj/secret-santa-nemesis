@@ -9,7 +9,8 @@ export default class extends React.Component {
       newSantaName: "",
       newSantanemesis: "",
       newSantaEmail: "",
-      santaList: []
+      santaList: [],
+      encodedResults: []
     };
   }
   static async getInitialProps({ req }) {
@@ -83,30 +84,31 @@ export default class extends React.Component {
     });
   }
 
-  submitSantas() {
+  submitSantas = async () => {
     const { santaList } = this.state;
-    console.log("sendsantas", santaList);
-    axios
-      .post("/api/send", {
+
+    try {
+      const {
+        data: { emailResults, encodedResults }
+      } = await axios.post("/api/send", {
         santaList
-      })
-      .then(function(response) {
-        console.log(response);
-      })
-      .catch(function(error) {
-        console.log("merrrorr", error);
       });
-  }
+      console.log(emailResults);
+      this.setState({ encodedResults });
+    } catch (error) {
+      console.log("merrrorr", error);
+    }
+  };
 
   render() {
-    const { santaList } = this.state;
+    const { santaList, encodedResults } = this.state;
     return (
       <div>
         <style jsx>{`
           .santaListItem {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            width: 50vw;
+            grid-template-columns: 4fr 2fr 1fr;
+            width: 100vw;
           }
         `}</style>
         <form>
@@ -144,6 +146,24 @@ export default class extends React.Component {
         >
           Click Here to allocate and send santas
         </button>
+        {encodedResults.length > 0 && (
+          <>
+            <h2>Messages sent 🛷 </h2>
+            <ul style={{ listStyle: "none" }}>
+              {encodedResults.map(({ from, to }) => (
+                <li key={from}>
+                  from: <strong>{from}</strong> to:{" "}
+                  <a
+                    href={`https://www.browserling.com/tools/base64-decode?input=${to}`}
+                    target="_blank"
+                  >
+                    (click to decode)
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
       </div>
     );
   }
