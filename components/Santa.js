@@ -5,31 +5,37 @@ const Santa = ({
   addSantaToList
 }) => (
   <div>
+    <style jsx>{`
+      input {
+        width: 300px;
+      }
+    `}</style>
     <div>
-      <label>
-        Santa Name:{" "}
-        <input type="text" name="santaName" onChange={handleNameInputChange} />
-      </label>
+      <label htmlFor="santaName">Santa Name: </label>
+      <input
+        type="text"
+        id="santaName"
+        name="santaName"
+        onChange={handleNameInputChange}
+      />
     </div>
     <div>
-      <label>
-        Santa's Email:{" "}
-        <input
-          type="email"
-          name="santaEmail"
-          onChange={handleEmailInputChange}
-        />
-      </label>
+      <label htmlFor="santaEmail">Santa's Email: </label>
+      <input
+        type="email"
+        id="santaEmail"
+        name="santaEmail"
+        onChange={handleEmailInputChange}
+      />
     </div>
     <div>
-      <label>
-        Santas Nemesis:{" "}
-        <input
-          type="text"
-          name="santaNemesis"
-          onChange={handleNemesisInputChange}
-        />
-      </label>
+      <label htmlFor="santaNemesis">Santas Nemesis:</label>
+      <input
+        type="text"
+        id="santaNemesis"
+        name="santaNemesis"
+        onChange={handleNemesisInputChange}
+      />
     </div>
     <button type="button" onClick={addSantaToList}>
       Add

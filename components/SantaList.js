@@ -108,7 +108,15 @@ export default class extends React.Component {
           .santaListItem {
             display: grid;
             grid-template-columns: 4fr 2fr 1fr;
-            width: 100vw;
+          }
+
+          .emailContent {
+            width: 100%;
+            height: 250px;
+          }
+
+          .button-large {
+            font-size: 3rem;
           }
         `}</style>
         <form>
@@ -119,35 +127,65 @@ export default class extends React.Component {
             handleNemesisInputChange={e => this.handleNemesisInputChange(e)}
           />
         </form>
-        <div>
-          {santaList.length > 0 &&
-            santaList.map(santa => (
-              <div className="santaListItem" key={santa.name}>
-                <div>
-                  🎅 {santa.name} {santa.email}
+        {santaList.length > 0 && (
+          <div>
+            <div>
+              <h2>List of Santas</h2>
+              {santaList.map(santa => (
+                <div className="santaListItem" key={santa.name}>
+                  <div>
+                    <p>
+                      🎅 {santa.name} {santa.email}
+                    </p>
+                  </div>
+                  <div>
+                    <p>☃️ {santa.nemesis}</p>
+                  </div>
+                  <div>
+                    <a
+                      href="#"
+                      type="button"
+                      onClick={() => this.deleteSanta(santa.name)}
+                    >
+                      Remove
+                    </a>
+                  </div>
                 </div>
-                <div>☃️ {santa.nemesis}</div>
-                <div>
-                  <a
-                    href="#"
-                    type="button"
-                    onClick={() => this.deleteSanta(santa.name)}
-                  >
-                    Remove
-                  </a>
-                </div>
-              </div>
-            ))}
-        </div>
-        <button
-          type="button"
-          className="button button-primary"
-          onClick={() => this.submitSantas()}
-        >
-          Click Here to allocate and send santas
-        </button>
+              ))}
+            </div>
+            <h3>Email text</h3>
+            <textarea
+              className="emailContent"
+              defaultValue="🎅 Ho ho ho! Merry Christmas! 🎅
+
+              Someone has been chosen to get you a gift; and *you* have been chosen to gift [NAME]!
+
+              For Christmas Extravaganza 2018, we've set a budget of £50 💰
+
+              Remember to wrap your present 🎁 in a way that no-one can guess who it is from and sneak it under the tree 🎄 when you get to your hosts 👨‍👩‍👧
+
+              Secret 🕵️‍♂️ Santa 🎅 is more fun if you can keep it a complete secret, so do your best! 🍾
+
+              Lots of love, the elves 🧝🧝‍🧝‍ xxx"
+            />
+            <div>
+              <h3>Ready?</h3>
+              <p>
+                Hit the sledge when you're ready to randomly assign secret
+                santas and email them!
+              </p>
+              <button
+                type="button"
+                className="button button-primary button-large"
+                onClick={() => this.submitSantas()}
+              >
+                🛷
+              </button>
+            </div>
+          </div>
+        )}
         {encodedResults.length > 0 && (
-          <>
+          <React.Frament>
             <h2>Messages sent 🛷 </h2>
             <ul style={{ listStyle: "none" }}>
               {encodedResults.map(({ from, to }) => (
@@ -157,12 +195,12 @@ export default class extends React.Component {
                     href={`https://www.browserling.com/tools/base64-decode?input=${to}`}
                     target="_blank"
                   >
-                    (click to decode)
+                    {to} (click to decode)
                   </a>
                 </li>
               ))}
             </ul>
-          </>
+          </React.Frament>
         )}
       </div>
     );
